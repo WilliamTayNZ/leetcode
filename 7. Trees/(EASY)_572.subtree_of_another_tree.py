@@ -12,7 +12,7 @@ class Solution:
         def isSameTree(root, subRoot):
             if not root and not subRoot:
                 return True
-            if not root or not subRoot
+            if not root or not subRoot:
                 return False
             if root.val != subRoot.val:
                 return False
