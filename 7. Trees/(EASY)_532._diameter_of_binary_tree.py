@@ -1,13 +1,44 @@
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        # For this implementation, diameter HAS to be stored in an array
+          # Because arrays are mutable and integer variables aren't
+           # This means dfs() will simply modify this global array
+             # But it can't modify a global integer variable and would instead create its own, which would need to be returned
+        diameter = [0]
+        
+
+        def dfs(root):
+            # If not a node, return height of -1
+            if not root:
+                return -1 
+
+            left_height = dfs(root.left)
+            right_height = dfs(root.right)
+
+            # Check if the combined height of a node's 2 subtrees exceeds the existing diameter
+              # This is where -1 for null nodes comes in handy. We use 2 to indicate the links between a parent and
+               # its two children. -1 for a null node cancels out a link.
+            diameter[0] = max(diameter[0], 2 + left_height + right_height)
+
+            # Return the height of this node
+            return 1 + max(left_height, right_height)
+
+        dfs(root)
+
+        return diameter[0]
+
+
+class OriginalSolution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         diameter, height = self.getCombinedHeightOfTwoSubtreesAndNodeHeight(root)
-        print(f"diameter = {diameter}, height = {height}")
+
         return diameter
 
         # Run a depth first search recursively
