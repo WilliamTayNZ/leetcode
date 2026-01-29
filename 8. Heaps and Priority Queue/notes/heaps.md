@@ -43,7 +43,7 @@ Python’s `heapq` module defaults to a Min-Heap.
 import heapq
 
 data = [10, 2, 15, 6]
-heapq.heapify(data)         # Transform list to heap in-place: O(n)
+heapq.heapify(data)         # Returns None, transforms list to heap in-place: O(n)
 heapq.heappush(data, 4)     # Add element: O(log n)
 smallest = heapq.heappop(data) # Remove and return root: O(log n)
 ```
@@ -77,3 +77,21 @@ heapq.heapify_max(data)
 heapq.heappush_max(data, 10)
 largest = heapq.heappop_max(data) # Returns 10
 ```
+
+## 4. Key Use Cases
+
+- Repeatedly extract the smallest/largest item
+- Maintaining a top-k or bottom-k set of values
+- Real time ranking, greedy selection, etc.
+- Need to sort on the fly, faster than O(n log n)
+
+(update)
+
+## 5. Pro-Tips for Interviews
+
+* **Priority Tuples**: If sorting objects, store them as `(priority, value)` tuples. The heap will sort by priority first.
+  * For example, if you need counts, you can use Counter() and easily push tuples with this.
+
+* **Heapify is faster**: If you have all your data upfront, use heapify() ($O(n)$) instead of calling heappush() $n$ times ($O(n \log n)$).
+
+* **Search:** Do not use a heap if you need to search for an element. It takes $O(n)$, making it no better than a standard list.
